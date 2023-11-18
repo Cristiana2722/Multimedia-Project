@@ -1,12 +1,12 @@
 .lower-image {
-    margin-top: 350px;
-  }
+  margin-top: 350px;
+}
 
 html,
 body {
-    background: no-repeat center fixed;
-    background-size: cover;
-    overflow: hidden;
+  background: no-repeat center fixed;
+  background-size: cover;
+  overflow: hidden;
 }
 
 .custom-btn {
@@ -68,15 +68,21 @@ body {
   background-color: #05d9e88b;
 }
 
-@keyframes hoverTitle 
-{
- 0%{transform: translateY(0)}
- 50%{transform: translateY(-30px)}
- 100%{transform: translateY(0)}
+@keyframes hoverTitle {
+  0% {
+    transform: translateY(0)
+  }
+
+  50% {
+    transform: translateY(-30px)
+  }
+
+  100% {
+    transform: translateY(0)
+  }
 }
 
-.title-image
-{
+.title-image {
   animation: hoverTitle 2s ease-in-out 0s infinite normal none;
 }
 
@@ -100,6 +106,7 @@ body {
   0% {
     opacity: 1;
   }
+
   100% {
     opacity: 0;
   }
@@ -109,9 +116,11 @@ body {
   0% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.6;
   }
+
   100% {
     opacity: 1;
   }
@@ -121,10 +130,32 @@ body {
   width: 1500px;
   border: 5px solid #05d9e8;
   padding: 20px;
-  margin: 20px;
-  border-radius: 20px;
-  margin-top: 700px;
+  margin: -30px;
+  border-radius: 40px;
   color: black;
   background-color: #05d9e8d2;
-  margin-left: 200px;
+  transform: translate(-5%, -100%);
+  color: black;
+  background-color: #05d9e8d2;
+  z-index: 2;
+}
+
+@media only screen and (max-width: 600px) {
+  .text-box {
+    width: 80%;
+    margin: 10px;
+    transform: translate(0%, -100%);
+    margin-top: -20px;
+    margin-left: 50px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .text-box {
+    width: 85%;
+    margin: 10px;
+    transform: translate(0%, -100%);
+    margin-top: -20px;
+    margin-left: 50px;
+  }
 }

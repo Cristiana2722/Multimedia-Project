@@ -1,9 +1,12 @@
 window.onload = function () {
-    const storyContainer = document.getElementById('story-container');
-    const choiceContainer = document.getElementById('choice-container');
-    const backgroundContainer = document.getElementById('background');
-    
-    const storyData = [
+    let storyContainer = document.getElementById('story-container');
+    let choiceContainer = document.getElementById('choice-container');
+    // let backgroundContainer = document.getElementById('background');
+    let canvas = document.getElementById('picture');
+    let context = canvas.getContext('2d');
+    let image = new Image();
+
+    let storyData = [
         {
             text: 'You are in Night City, the heart of cyberpunk. You stand at a crossroads: on your left,' +
                 'the imposing silhouette of Arasaka Tower, a realm where diplomacy thrives; on your right, the underground of the city, ' +
@@ -124,67 +127,68 @@ window.onload = function () {
             ]
         }
     ];
-    
+
     function getBackground(index) {
         switch (index) {
             case 0:
-                return 'img/nc.png';
+                return '../img/nc.png';
             case 1:
-                return 'img/office.png';
+                return '../img/office.png';
             case 2:
-                return 'img/clock.png';
+                return '../img/clock.png';
             case 3:
-                return 'img/bodyguards.png';
+                return '../img/bodyguards.png';
             case 4:
-                return 'img/angelina-talking.png';
+                return '../img/angelina-talking.png';
             case 5:
-                return 'img/sandwich.png';
+                return '../img/sandwich.png';
             case 6:
-                return 'img/bad-ending.png';
+                return '../img/bad-ending.png';
             case 7:
-                return 'img/bad-ending.png';
+                return '../img/bad-ending.png';
             case 8:
-                return 'img/good-ending.png';
+                return '../img/good-ending.png';
             case 9:
-                return 'img/boring-ending.png';
+                return '../img/boring-ending.png';
             case 10:
-                return 'img/alley.png';
+                return '../img/alley.png';
             case 11:
-                return 'img/angelina-talking.png';
+                return '../img/angelina-talking.png';
             case 12:
-                return 'img/bad-ending.png';
+                return '../img/bad-ending.png';
             case 13:
-                return 'img/arasaka-tower.png';
+                return '../img/arasaka-tower.png';
             case 14:
-                return 'img/bad-ending.png';
+                return '../img/bad-ending.png';
             case 15:
-                return 'img/servers.png';
+                return '../img/servers.png';
             case 16:
-                return 'img/angelina-bar.png';
+                return '../img/angelina-bar.png';
             case 17:
-                return 'img/good-ending.png';
+                return '../img/good-ending.png';
             default:
-                return 'img/black.png';
+                return '../img/black.png';
         }
     }
-    
+
     let sceneIndex = 0;
-    
+
     function renderScene() {
-        const scene = storyData[sceneIndex];
+        let scene = storyData[sceneIndex];
         storyContainer.innerHTML = `<p>${scene.text}</p>`;
-    
-        document.body.style.backgroundImage = `url('${getBackground(sceneIndex)}')`;
-        document.body.style.backgroundSize = 'cover';
-    
+
+        // document.body.style.backgroundImage = `url('${getBackground(sceneIndex)}')`;
+        // document.body.style.backgroundSize = 'cover';
+        image.src = `${getBackground(sceneIndex)}`;
+
         storyContainer.style.fontWeight = "700";
-    
+
         choiceContainer.innerHTML = '';
-    
+
         scene.choices.forEach(choice => {
-            const choiceButton = document.createElement('button');
+            let choiceButton = document.createElement('button');
             choiceButton.textContent = choice.text;
-    
+
             choiceButton.style.textAlign = 'left';
             choiceButton.style.display = 'block';
             choiceButton.style.width = '100%';
@@ -202,6 +206,32 @@ window.onload = function () {
             choiceContainer.appendChild(choiceButton);
         });
     }
-    
+
     renderScene();
+
+    image.onload = function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        if (window.innerWidth <= 600) {
+            let centralWidth = 300 * (image.width / image.height);
+            context.drawImage(image, 0, 0, image.width, image.height, (canvas.width - centralWidth) / 2, (canvas.height - 300) / 2, centralWidth, 300);
+            document.body.style.backgroundColor = 'black';
+        } else {
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        }
     }
+
+    window.addEventListener('resize', function () {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        if (window.innerWidth <= 600) {
+            let centralWidth = 300 * (image.width / image.height);
+            context.drawImage(image, 0, 0, image.width, image.height, (canvas.width - centralWidth) / 2, (canvas.height - 300) / 2, centralWidth, 300);
+            document.body.style.backgroundColor = 'black';
+        } else {
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+        }
+    });
+}
