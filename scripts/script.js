@@ -219,6 +219,12 @@ window.onload = function () {
         recognition.onresult = function (event) {
             let command = event.results[0][0].transcript;
             
+            function matchesWord(command, keyword) {
+                let keywords = keyword.split(" ");
+                let regex = new RegExp(`.*\\b(${keywords.join("|")})\\b.*`, 'i');
+                return regex.test(command);
+            }
+
             try {
                 let choiceOne = scene.choices[0].text.split(" ", 2);
                 let choiceTwo = scene.choices[1].text.split(" ", 2);
@@ -227,17 +233,17 @@ window.onload = function () {
                 // console.log(choiceOne);
                 // console.log(choiceTwo);
                 // console.log(scene.choices[0].text.toLowerCase());
-                if (command.toLowerCase() === choiceOne[0].toLowerCase()) {
+                if (command.toLowerCase() === choiceOne[0].toLowerCase() || matchesWord(command, choiceOne[0])) {
                     sceneIndex = scene.choices[0].next;
                     console.log(scene.choices[0].next);
-                } else if (command.toLowerCase() === choiceTwo[0].toLowerCase()) {
+                } else if (command.toLowerCase() === choiceTwo[0].toLowerCase() || matchesWord(command,  choiceTwo[0])) {
                     sceneIndex = scene.choices[1].next;
                     console.log(scene.choices[1].next);
                 }
             } catch (error) {
                 // console.log(error);
                 let singleChoice = scene.choices[0].text.split(" ", 2);
-                if (command.toLowerCase() === singleChoice[0].toLowerCase()) {
+                if (command.toLowerCase() === singleChoice[0].toLowerCase() || matchesWord(command,  singleChoice[0])) {
                     sceneIndex = scene.choices[0].next;
                     console.log(scene.choices[0].next);
                 }
