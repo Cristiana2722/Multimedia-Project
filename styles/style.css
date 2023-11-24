@@ -38,7 +38,8 @@ body {
   margin: 4px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
-  margin-top: 250px;
+  /* margin-top: 250px; */
+  margin-top: 25px;
 }
 
 .custom-btn-info:hover {
@@ -49,7 +50,6 @@ body {
   margin-top: 250px;
   border-radius: 20px;
   background-color: #05d9e88b;
-  height: 500px;
 }
 
 .card-header {
