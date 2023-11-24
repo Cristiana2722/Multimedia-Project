@@ -2,9 +2,18 @@ window.onload = function () {
     let storyContainer = document.getElementById('story-container');
     let choiceContainer = document.getElementById('choice-container');
     // let backgroundContainer = document.getElementById('background');
+
     let canvas = document.getElementById('picture');
     let context = canvas.getContext('2d');
     let image = new Image();
+
+    let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition);
+    recognition.lang = "en-US";
+    recognition.start();
+
+    recognition.onend = function () {
+        recognition.start();
+    }
 
     let storyData = [
         {
@@ -203,8 +212,40 @@ window.onload = function () {
                 sceneIndex = choice.next;
                 renderScene();
             });
+
             choiceContainer.appendChild(choiceButton);
         });
+
+        recognition.onresult = function (event) {
+            let command = event.results[0][0].transcript;
+            
+            try {
+                let choiceOne = scene.choices[0].text.split(" ", 2);
+                let choiceTwo = scene.choices[1].text.split(" ", 2);
+
+                console.log(command);
+                // console.log(choiceOne);
+                // console.log(choiceTwo);
+                // console.log(scene.choices[0].text.toLowerCase());
+                if (command.toLowerCase() === choiceOne[0].toLowerCase()) {
+                    sceneIndex = scene.choices[0].next;
+                    console.log(scene.choices[0].next);
+                } else if (command.toLowerCase() === choiceTwo[0].toLowerCase()) {
+                    sceneIndex = scene.choices[1].next;
+                    console.log(scene.choices[1].next);
+                }
+            } catch (error) {
+                // console.log(error);
+                let singleChoice = scene.choices[0].text.split(" ", 2);
+                if (command.toLowerCase() === singleChoice[0].toLowerCase()) {
+                    sceneIndex = scene.choices[0].next;
+                    console.log(scene.choices[0].next);
+                }
+            }
+
+            renderScene();
+        }
+
     }
 
     renderScene();

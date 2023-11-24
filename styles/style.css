@@ -148,6 +148,10 @@ body {
     margin-top: -20px;
     margin-left: 50px;
   }
+
+  .custom-btn-info {
+    margin-top: 150px;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
